@@ -1,6 +1,6 @@
 
 IntRange.metaClass.define {
-    // ”ÍˆÍ“à‚Åƒ‰ƒ“ƒ_ƒ€
+    // ç¯„å›²å†…ã§ãƒ©ãƒ³ãƒ€ãƒ 
     random {
         int from = delegate.isReverse() ? to : from
         int to   = delegate.isReverse() ? from : to
