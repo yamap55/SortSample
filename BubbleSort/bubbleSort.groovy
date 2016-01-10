@@ -1,12 +1,7 @@
-
-IntRange.metaClass.define {
-    // 範囲内でランダム
-    random {
-        int from = delegate.isReverse() ? to : from
-        int to   = delegate.isReverse() ? from : to
-        int size = to - from + 1
-        (Math.floor(Math.random() * size) + from) as int
-    }
+def createRandomArray = {size ->
+  (0..<size).collect {
+    (Math.floor(Math.random() * 10) + 1) as int
+  }
 }
 
 def f = {array ->
@@ -18,10 +13,8 @@ def f = {array ->
   array
 }
 
-def array = []
-10.times {
-  array << (1..10).random()
-}
+def array = createRandomArray(10)
+
 println "start : ${array}"
 def bk = array.clone()
 def afterArray = f(array)
