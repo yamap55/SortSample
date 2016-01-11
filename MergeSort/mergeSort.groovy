@@ -1,57 +1,49 @@
-def createRandomArray = {i ->
-  (0..<i).collect {
+def createRandomList = {size ->
+  (0..<size).collect {
     (Math.floor(Math.random() * 10) + 1) as int
   }
 }
 
-def ll = createRandomArray(10)
-println ll
+def randomList = createRandomList(10)
+println randomList
 // size2の配列に分割
-def dd = ll.inject([]) {a,i ->
-  if (a*.size().sum(0) % 2 == 0) {
-    a << [i]
+def firstList = randomList.inject([]) {d,i ->
+  if (d*.size().sum(0) % 2 == 0) {
+    d << [i]
   } else {
-    a.last()[0] < i ?  a.last() << i : a.last().add(0,i)
+    d.last()[0] < i ?  d.last() << i : d.last().add(0,i)
   }
-  a
+  d
 }
-println "2づつに分割してソート : ${dd}"
+//println "2づつに分割してソート : ${firstList}"
 
 // 2つのListをマージする（渡されているListはマージされている前提）
-def f = {a,b->
-//  println "マージするList : ${a}, ${b}"
-  def ff = {mergeList,c,d->
-    if (!c || !d) {
-//      println "マージされたList : ${c+d+mergeList}"
-      return c+d+mergeList
+def listMerge = {list1,list2->
+  return {mergeList,l1,l2->
+    if (!l1 || !l2) {
+      return l1+l2+mergeList
     }
-//    println "mergeList : ${mergeList}, c : ${c}, d : ${d}}"
-    def bigValue = (c.last() < d.last() ? d : c).pop()
+    def bigValue = (l1.last() < l2.last() ? l2 : l1).pop()
     mergeList.add(0,bigValue)
-    return call(mergeList,c,d)
-  }
-  return ff([],a,b)
+    return call(mergeList,l1,l2)
+  }([],list1,list2)
 }
 
-//assert f([2,4,6],[1,3,5]) == [1,2,3,4,5,6]
+//assert listMerge([2,4,6],[1,3,5]) == [1,2,3,4,5,6]
 
-def ffff = {ddd ->
-//  println "ffff : ${ddd}"
-  def aaaa = []
-  ddd.size().times{i->
-    if (ddd.size()-1 < i*2) {
-//      println "a : ${aaaa}"
-      return aaaa
-    } else if(ddd.size()-1 < i*2+1){
-//      println "b : ${aaaa}"
-      aaaa << (ddd[(i*2)])
+// List内のListを2つづつマージ。
+def result = {list ->
+  def resultList = []
+  list.size().times{i->
+    if (list.size()-1 < i*2) {
+      return resultList
+    } else if(list.size()-1 < i*2+1){
+      resultList << (list[(i*2)])
     } else {
-//      println "c : ${aaaa}"
-      aaaa << f(ddd[(i*2)],ddd[i*2+1])
+      resultList << listMerge(list[(i*2)],list[i*2+1])
     }
   }
-//  println "size : ${aaaa.size()}, aaaa : ${aaaa}"
-  return aaaa.size() == 1 ? aaaa : call(aaaa)
-}(dd)
+  return resultList.size() == 1 ? resultList[0] : call(resultList)
+}(firstList)
 
-println ffff[0]
+println result
