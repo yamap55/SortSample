@@ -7,13 +7,13 @@ def createRandomList = {size ->
 def randomList = createRandomList(10)
 println randomList
 // size2の配列に分割
-def firstList = randomList.inject([]) {d,i ->
-  if (d*.size().sum(0) % 2 == 0) {
-    d << [i]
+def firstList = randomList.inject([]) {result,value ->
+  if (result*.size().sum(0) % 2 == 0) {
+    result << [value]
   } else {
-    d.last()[0] < i ?  d.last() << i : d.last().add(0,i)
+    result.last()[0] < value ?  result.last() << value : result.last().add(0,value)
   }
-  d
+  result
 }
 //println "2づつに分割してソート : ${firstList}"
 
@@ -34,13 +34,13 @@ def listMerge = {list1,list2->
 // List内のListを2つづつマージ。
 def result = {list ->
   def resultList = []
-  list.size().times{i->
-    if (list.size()-1 < i*2) {
+  list.size().times{
+    if (list.size()-1 < it*2) {
       return resultList
-    } else if(list.size()-1 < i*2+1){
-      resultList << (list[(i*2)])
+    } else if(list.size()-1 < it*2+1){
+      resultList << (list[(it*2)])
     } else {
-      resultList << listMerge(list[(i*2)],list[i*2+1])
+      resultList << listMerge(list[(it*2)],list[it*2+1])
     }
   }
   return resultList.size() == 1 ? resultList[0] : call(resultList)
