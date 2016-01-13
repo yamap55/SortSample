@@ -5,18 +5,16 @@ def createRandomList = {size ->
 }
 
 def randomList = createRandomList(10)
-println randomList
+println "start : ${randomList}"
 
 // 2つのListをマージする（渡されているListはマージされている前提）
-def listMerge = {list1,list2->
-  return {mergeList,l1,l2->
-    if (!l1 || !l2) {
-      return l1+l2+mergeList
+def listMerge = {mergeList, list1, list2->
+    if (!list1 || !list2) {
+      return list1 + list2 + mergeList
     }
-    def bigValue = (l1.last() < l2.last() ? l2 : l1).pop()
+    def bigValue = (list1.last() < list2.last() ? list2 : list1).pop()
     mergeList.add(0,bigValue)
-    return call(mergeList,l1,l2)
-  }([],list1,list2)
+    call(mergeList, list1, list2)
 }
 
 def mergeSort = {
@@ -26,7 +24,7 @@ def mergeSort = {
   def i = it.size() / 2 as int
   def left = call(it[0..i-1])
   def right = call(it[i..it.size()-1])
-  listMerge(left, right)
+  listMerge([], left, right)
 }
 
-println mergeSort(randomList)
+println "end   : ${mergeSort(randomList)}"
