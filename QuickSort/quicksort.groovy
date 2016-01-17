@@ -8,8 +8,7 @@ def randomList = createRandomList(10)
 println randomList
 
 def quickSort = {result, list ->
-  println "result : ${result}, list : ${list}"
-  if (list.size() <= 1 || list.every{list[0] == it}) {
+  if (list.every{list[0] == it}) {
     result.addAll(list)
     return result
   }
