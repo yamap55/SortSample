@@ -9,14 +9,14 @@ println randomList
 
 def quickSort = {list, result=[] ->
   if (list.every{list[0] == it}) {
-    result.addAll(list)
-    return result
+    return result + list
   }
   def pivot = list.pop()
   def small = list.findAll{it < pivot}
   def big = list.findAll{it >= pivot}
+  
   big.add(0,pivot)
-  call(small, result)
+  result = call(small, result)
   call(big, result)
 }
 println quickSort(randomList)
