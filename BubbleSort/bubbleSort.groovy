@@ -4,7 +4,7 @@ def createRandomArray = {size ->
   }
 }
 
-def f = {array ->
+def bubbleSort = {array ->
   (array.size()-1).times {
     ((array.size()-1)-it).times {
       array[it] < array[it+1] ?: Collections.swap(array, it,it+1)
@@ -17,6 +17,6 @@ def array = createRandomArray(10)
 
 println "start : ${array}"
 def bk = array.clone()
-def afterArray = f(array)
+def afterArray = bubbleSort(array)
 println "end : ${afterArray}"
 assert bk.sort() == afterArray
