@@ -21,7 +21,7 @@ def mergeSort = {
   if (it.size() == 1) {
     return it
   }
-  def i = it.size() / 2 as int
+  def i = it.size().intdiv(2)
   def left = call(it[0..i-1])
   def right = call(it[i..it.size()-1])
   listMerge(left, right)
