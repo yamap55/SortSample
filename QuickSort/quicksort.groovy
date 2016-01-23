@@ -7,16 +7,14 @@ def createRandomList = {size ->
 def randomList = createRandomList(10)
 println randomList
 
-def quickSort = {list, result=[] ->
+def quickSort = {list ->
   if (list.every{list[0] == it}) {
-    return result + list
+    return list
   }
   def pivot = list.pop()
   def small = list.findAll{it < pivot}
   def big = list.findAll{it >= pivot}
   
-  big.add(0,pivot)
-  result = call(small, result)
-  call(big, result)
+  call(small) + pivot + call(big)
 }
 println quickSort(randomList)
